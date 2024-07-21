@@ -1,12 +1,33 @@
 {
-  "name": "my-app-node",
+
+  "name": "my-node-app",
+
   "version": "1.0.0",
-  "description": "",
+
   "main": "index.js",
+
+  "type": "module",
+
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+
+    "test": "mocha tests/*.test.js"
+
   },
+
   "keywords": [],
+
   "author": "",
-  "license": "ISC"
+
+  "license": "ISC",
+
+  "description": "",
+
+  "devDependencies": {
+
+    "chai": "^5.1.1",
+
+    "mocha": "^10.4.0"
+
+  }
+
 }
