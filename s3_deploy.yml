@@ -1,0 +1,35 @@
+name: Deploy to S3
+
+# Trigger the workflow on push or pull requests to the main branch
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Step 1: Check out the latest code
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    # Step 2: Set up AWS credentials using the secrets in GitHub
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v3
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-1  # Specify the AWS region of your bucket
+
+    # Step 3: Sync the repository with the S3 bucket
+    - name: Sync to S3
+      run: |
+        aws s3 sync . s3://${{ secrets.S3_BUCKET }} --delete
+      env:
+        S3_BUCKET: ${{ secrets.S3_BUCKET }}
+
